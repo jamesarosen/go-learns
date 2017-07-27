@@ -16,7 +16,12 @@ func main() {
 
 	defer file.Close()
 
-	out := os.Stdout
+	var out io.Writer
+	if (os.Args[2] == "--stderr") {
+		out = os.Stderr
+	} else {
+		out = os.Stdout
+	}
 
 	io.Copy(out, file)
 }
