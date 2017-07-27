@@ -1,20 +1,22 @@
 package main
 
 import (
-	"bufio"
-	"io/ioutil"
+	"io"
 	"os"
 )
 
 func main() {
-	f := bufio.NewWriter(os.Stdout)
-	defer f.Flush()
-
 	path := os.Args[1]
-	dat, err := ioutil.ReadFile(path)
+	println(path)
+	file, err := os.Open(path)
+
 	if err != nil {
 		panic(err)
 	}
 
-	f.Write(dat)
+	defer file.Close()
+
+	out := os.Stdout
+
+	io.Copy(out, file)
 }
