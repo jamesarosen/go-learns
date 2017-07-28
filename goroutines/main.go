@@ -1,13 +1,11 @@
 package main
 
-import "time"
-
 func main() {
-	foo("a")
-	go foo("b")
-	time.Sleep(time.Second)
+	c := make(chan int)
+	go compute(c)
+	println(<-c)
 }
 
-func foo(s string) {
-	println(s)
+func compute(c chan int) {
+	c <- 123
 }
